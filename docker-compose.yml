@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  postgresql:
+    image: postgres:9.6
+    container_name: postgres
+    ports:
+      - 5444:5432
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: countries
+      PGDATA: var/lib/postgresql/data/pg/data
+    restart: always
+  app:
+    image: mfatkullin/app
+    container_name: application
+    depends_on:
+      - postgresql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/countries
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - 8080:8080
+    restart: always
