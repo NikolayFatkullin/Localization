@@ -15,16 +15,16 @@ import java.nio.charset.StandardCharsets.UTF_8
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class LocalizationControllerTest(
+internal class CountryControllerTest(
     @Autowired val mockMvc: MockMvc,
 ) {
     @Test
     fun getNameOfCountry() {
-        mockMvc.perform(get("/country-name?language=en&iso=IN")).andDo(print()).andExpect(status().isOk)
+        mockMvc.perform(get("/countries/IN?language=en")).andDo(print()).andExpect(status().isOk)
             .andExpect(content().string(containsString("India")))
-        mockMvc.perform(get("/country-name?language=en&iso=AU")).andDo(print()).andExpect(status().isOk)
+        mockMvc.perform(get("/countries/AU?language=en")).andDo(print()).andExpect(status().isOk)
             .andExpect(content().string(containsString("Australia")))
-        mockMvc.perform(get("/country-name?language=en&iso=UA")).andDo(print()).andExpect(status().isOk)
+        mockMvc.perform(get("/countries/UA?language=en")).andDo(print()).andExpect(status().isOk)
             .andExpect(content().string(containsString("Ukraine")))
 
     }
