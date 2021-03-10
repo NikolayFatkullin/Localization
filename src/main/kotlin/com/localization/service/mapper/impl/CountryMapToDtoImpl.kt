@@ -7,9 +7,5 @@ import org.springframework.stereotype.Component
 
 @Component
 class CountryMapToDtoImpl : CountryMapToDto {
-    override fun mapToDto(country: Country): CountryResponseDto {
-        val localizationResponseDto = CountryResponseDto()
-        localizationResponseDto.localizedName = country.name
-        return localizationResponseDto
-    }
+    override fun mapToDto(country: Country): CountryResponseDto = CountryResponseDto(country.name)
 }

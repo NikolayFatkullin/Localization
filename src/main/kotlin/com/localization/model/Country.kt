@@ -7,10 +7,10 @@ import javax.persistence.*
 class Country(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-    var name: String,
+    var id: Long?,
+    var name: String?,
 ){
-    constructor() : this(0, "")
+    constructor() : this(null, null)
 
     override fun toString(): String {
         return "Country(id=$id, name='$name')"

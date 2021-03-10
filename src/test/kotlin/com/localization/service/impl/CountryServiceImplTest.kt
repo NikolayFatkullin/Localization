@@ -3,6 +3,7 @@ package com.localization.service.impl
 import com.localization.service.CountryService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.DataProcessingException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.lang.RuntimeException
@@ -35,13 +36,13 @@ internal class CountryServiceImplTest(
 
     @Test
     fun checkForIncorrectData() {
-        assertThrows(RuntimeException::class.java) {
+        assertThrows(DataProcessingException::class.java) {
             countryService.getLocalizationByLanguageAndIso(
                 "au",
                 "IN"
             )
         }
-        assertThrows(RuntimeException::class.java) {
+        assertThrows(DataProcessingException::class.java) {
             countryService.getLocalizationByLanguageAndIso(
                 "ua",
                 "INSSS"

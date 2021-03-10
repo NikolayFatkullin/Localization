@@ -21,6 +21,9 @@
         <db.driver>org.postgresql.Driver</db.driver>
         <db.username>postgres</db.username>
         <db.password>root</db.password>
+        <!-- Dependencies Versions -->
+        <logback.version>1.2.3</logback.version>
+        <liquibase.version>3.10.3</liquibase.version>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
@@ -54,7 +57,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
+            <version>${logback.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -63,7 +66,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${logback.version}</version>
         </dependency>
         <!-- Postgres -->
         <dependency>
@@ -80,7 +83,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>3.10.3</version>
+            <version>${liquibase.version}</version>
         </dependency>
     </dependencies>
 
