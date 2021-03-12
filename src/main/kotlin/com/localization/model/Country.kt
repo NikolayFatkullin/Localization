@@ -11,9 +11,4 @@ class Country(
     var name: String?,
 ){
     constructor() : this(null, null)
-
-    override fun toString(): String {
-        return "Country(id=$id, name='$name')"
-    }
-
 }

@@ -27,10 +27,12 @@ class CountryController(
 
     @ExceptionHandler(value = [DataProcessingException::class])
     fun handleConflict(
-        ex: RuntimeException?, request: WebRequest?
-    ): ResponseEntity<Any?>? {
+        ex: DataProcessingException, request: WebRequest?
+    ): ResponseEntity<Any?> {
+        val body = HashMap<String, String>()
+        body["message"] = ex.message.toString()
+        body["status"]  = HttpStatus.NOT_FOUND.toString()
         return ResponseEntity(
-            ex?.message, HttpStatus.NOT_FOUND
-        )
+            body, HttpStatus.NOT_FOUND)
     }
 }
