@@ -1,13 +1,13 @@
 package com.localization.controller
 
-import com.localization.exception.DataProcessingException
+import com.localization.exception.DataNotFoundException
+import com.localization.exception.IncorrectInputDataException
 import com.localization.model.dto.CountryResponseDto
 import com.localization.service.CountryService
 import com.localization.service.mapper.CountryMapToDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.context.request.WebRequest
 
 
 @RestController
@@ -25,14 +25,27 @@ class CountryController(
         return countryMapToDto.mapToDto(localizationByLanguageAndIso)
     }
 
-    @ExceptionHandler(value = [DataProcessingException::class])
-    fun handleConflict(
-        ex: DataProcessingException, request: WebRequest?
+    @ExceptionHandler(value = [DataNotFoundException::class])
+    fun handleNotFound(
+        ex: DataNotFoundException
     ): ResponseEntity<Any?> {
         val body = HashMap<String, String>()
         body["message"] = ex.message.toString()
-        body["status"]  = HttpStatus.NOT_FOUND.toString()
+        body["status"] = HttpStatus.NOT_FOUND.toString()
         return ResponseEntity(
-            body, HttpStatus.NOT_FOUND)
+            body, HttpStatus.NOT_FOUND
+        )
+    }
+
+    @ExceptionHandler(value = [IncorrectInputDataException::class])
+    fun handleIncorrectInput(
+        ex: IncorrectInputDataException
+    ): ResponseEntity<Any> {
+        val body = HashMap<String, String>()
+        body["message"] = ex.message.toString()
+        body["status"] = HttpStatus.BAD_REQUEST.toString()
+        return ResponseEntity(
+            body, HttpStatus.BAD_REQUEST
+        )
     }
 }

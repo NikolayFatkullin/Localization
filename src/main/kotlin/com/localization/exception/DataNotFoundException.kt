@@ -1,4 +1,4 @@
 package com.localization.exception
 
-class DataProcessingException(message: String) :
+class DataNotFoundException(message: String) :
     RuntimeException(message)

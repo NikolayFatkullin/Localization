@@ -7,10 +7,8 @@ import org.springframework.data.repository.query.Param
 
 interface CountryRepository : JpaRepository<Country, Int> {
     @Query(
-        value = "SELECT c.id, c.name FROM country AS c LEFT JOIN country_codes AS cc ON cc.id = c.iso_id " +
-                "LEFT JOIN language AS l ON l.id = c.language_id " +
-                "WHERE l.language = :language AND cc.iso = :isoCode",
-        nativeQuery = true
+        value = "FROM Country c LEFT JOIN FETCH c.language LEFT JOIN FETCH c.isoCode " +
+                "WHERE c.language.language = :language AND c.isoCode.iso = :isoCode"
     )
     fun getByIsoCodeAndLanguage(
         @Param("isoCode") isoCode: String,

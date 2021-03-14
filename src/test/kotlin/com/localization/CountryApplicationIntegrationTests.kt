@@ -17,42 +17,36 @@ class CountryApplicationIntegrationTests(@Autowired val mockMvc: MockMvc) {
     @Test
     fun checkResponseCodeWithCorrectData() {
         mockMvc.perform(get("/countries/IN?language=en")).andExpect(status().isOk)
-        mockMvc.perform(get("/countries/AU?language=en")).andExpect(status().isOk)
-        mockMvc.perform(get("/countries/UA?language=en")).andExpect(status().isOk)
+            .andExpect(content().contentType("application/json"))
+            .andExpect(content().string(containsString("India")))
     }
 
     @Test
-    fun checkResponseCodeWithIncorrectData() {
-        mockMvc.perform(get("/countries/OOO?language=en")).andExpect(status().isNotFound)
-        mockMvc.perform(get("/countries/AU?language=as")).andExpect(status().isNotFound)
-        mockMvc.perform(get("/countries/UADS?language=english")).andExpect(status().isNotFound)
+    fun checkResponseCodeWithIncorrectIso() {
+        mockMvc.perform(get("/countries/OOO?language=en")).andExpect(status().isBadRequest)
+            .andExpect(content().contentType("application/json"))
+            .andExpect(
+                content().string(
+                    containsString(
+                        "Incorrect iso code of country: OOO"
+                    )
+                )
+            )
+
     }
 
     @Test
-    fun checkResponseDataTypeWithCorrectData() {
-        mockMvc.perform(get("/countries/IN?language=en")).andExpect(content().contentType("application/json"))
-        mockMvc.perform(get("/countries/AU?language=en")).andExpect(content().contentType("application/json"))
-        mockMvc.perform(get("/countries/UA?language=en")).andExpect(content().contentType("application/json"))
+    fun checkResponseDataTypeWithIncorrectLanguage() {
+        mockMvc.perform(get("/countries/UA?language=english"))
+            .andExpect(status().isBadRequest)
+            .andExpect(content().contentType("application/json"))
+            .andExpect(
+                content().string(
+                    containsString(
+                        "Incorrect localization language: english"
+                    )
+                )
+            )
     }
 
-    @Test
-    fun checkResponseDataTypeWithIncorrectData() {
-        mockMvc.perform(get("/countries/OOO?language=en")).andExpect(content().contentType("application/json"))
-        mockMvc.perform(get("/countries/AU?language=as")).andExpect(content().contentType("application/json"))
-        mockMvc.perform(get("/countries/UADS?language=english")).andExpect(content().contentType("application/json"))
-    }
-
-    @Test
-    fun checkResponseStringWithCorrectData() {
-        mockMvc.perform(get("/countries/IN?language=en")).andExpect(content().string(containsString("India")))
-        mockMvc.perform(get("/countries/AU?language=en")).andExpect(content().string(containsString("Australia")))
-        mockMvc.perform(get("/countries/UA?language=en")).andExpect(content().string(containsString("Ukraine")))
-    }
-
-    @Test
-    fun checkResponseStringWithIncorrectData() {
-        mockMvc.perform(get("/countries/OOO?language=en")).andExpect(content().string(containsString("Can't get name of country by iso: OOO and language: en")))
-        mockMvc.perform(get("/countries/AU?language=as")).andExpect(content().string(containsString("Can't get name of country by iso: AU and language: as")))
-        mockMvc.perform(get("/countries/UADS?language=english")).andExpect(content().string(containsString("Can't get name of country by iso: UADS and language: english")))
-    }
 }
