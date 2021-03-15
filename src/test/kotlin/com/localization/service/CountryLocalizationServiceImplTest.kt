@@ -1,8 +1,7 @@
 package com.localization.service
 
-import com.localization.exception.DataNotFoundException
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.Country
+import com.localization.model.CountryLocalization
 import com.localization.repository.CountryRepository
 import com.localization.repository.IsoCodeRepository
 import com.localization.repository.LanguageRepository
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 
-internal class CountryServiceImplTest {
+internal class CountryLocalizationServiceImplTest {
     private val countryRepository: CountryRepository = mock(CountryRepository::class.java)
     private val languageRepository: LanguageRepository = mock(LanguageRepository::class.java)
     private val isoCodeRepository: IsoCodeRepository = mock(IsoCodeRepository::class.java)
@@ -34,7 +33,7 @@ internal class CountryServiceImplTest {
                 "KM",
                 "ru"
             )
-        ).thenReturn(Country(12, "Коморы", null, null))
+        ).thenReturn(CountryLocalization(12, "Коморы", null, null))
         val firstExpectedCountryName = "Коморы"
         val firstActualCountryName =
             countryService.getLocalizationByLanguageAndIso("KM", "ru").name

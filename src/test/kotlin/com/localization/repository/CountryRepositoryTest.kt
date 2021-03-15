@@ -1,6 +1,7 @@
 package com.localization.repository
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -10,26 +11,18 @@ import org.springframework.test.context.TestPropertySource
 @DataJpaTest
 @TestPropertySource(locations = ["classpath:application-test.properties"])
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-internal class CountryRepositoryTest {
+class CountryRepositoryTest {
     @Autowired
-    val countryRepository: CountryRepository? = null
+    val isoCodeRepository: IsoCodeRepository? = null
 
     @Test
     internal fun testForCorrectData() {
-        val firstCountryName = "Afghanistan"
-        val firstCountry = countryRepository?.getByIsoCodeAndLanguage("AF", "en")
-        assertEquals(firstCountryName, firstCountry?.name)
+        assertTrue(isoCodeRepository!!.existsByIso("AF"))
     }
 
     @Test
     internal fun testForIncorrectIso() {
-        val firstCountry = countryRepository?.getByIsoCodeAndLanguage("AFF", "en")
-        assertEquals(null, firstCountry?.name)
+        assertFalse(isoCodeRepository!!.existsByIso("AFF"))
     }
 
-    @Test
-    internal fun testForIncorrectLanguage() {
-        val firstCountry = countryRepository?.getByIsoCodeAndLanguage("AF", "english")
-        assertEquals(null, firstCountry?.name)
-    }
 }

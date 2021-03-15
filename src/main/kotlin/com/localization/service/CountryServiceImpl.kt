@@ -2,7 +2,7 @@ package com.localization.service
 
 import com.localization.exception.DataNotFoundException
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.Country
+import com.localization.model.CountryLocalization
 import com.localization.repository.CountryRepository
 import com.localization.repository.IsoCodeRepository
 import com.localization.repository.LanguageRepository
@@ -15,7 +15,7 @@ class CountryServiceImpl(
     val languageRepository: LanguageRepository
 ) :
     CountryService {
-    override fun getLocalizationByLanguageAndIso(isoCode: String, language: String): Country {
+    override fun getLocalizationByLanguageAndIso(isoCode: String, language: String): CountryLocalization {
         if (!isoCodeRepository.existsByIso(isoCode)) {
             throw IncorrectInputDataException("Incorrect iso code of country: $isoCode")
         }

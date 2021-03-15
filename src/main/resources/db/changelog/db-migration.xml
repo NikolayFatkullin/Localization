@@ -7,13 +7,8 @@
             CREATE TABLE country_codes
             (
             id BIGINT NOT NULL PRIMARY KEY,
-            iso VARCHAR(255),
+            iso VARCHAR(255)
             );
-        </sql>
-    </changeSet>
-    <changeSet author="achil (generated)" id="1615233457468-9" context="test">
-        <sql>
-            INSERT INTO country_codes (id, iso) values(1, 'AF'), (2, 'AL'),(3, 'AQ')
         </sql>
     </changeSet>
     <changeSet author="achil (generated)" id="1615233457468-2" context="dev">
@@ -29,7 +24,7 @@
             id BIGINT NOT NULL PRIMARY KEY,
             name VARCHAR(255),
             iso_id BIGINT,
-            language_id BIGINT,
+            language_id BIGINT
             );
         </sql>
     </changeSet>
@@ -38,13 +33,8 @@
             CREATE TABLE language
             (
             id BIGINT NOT NULL PRIMARY KEY,
-            language VARCHAR(255),
+            language VARCHAR(255)
             );
-        </sql>
-    </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-10" context="test">
-        <sql>
-            INSERT INTO country(id, name, iso_id, language_id) values(1, 'Afghanistan', 1, 2),(4, 'Albania', 2, 2),(8, 'Антарктика', 3, 1)
         </sql>
     </changeSet>
     <changeSet author="Nikolay Fatkullin" id="1615233457468-5" context="dev">
@@ -56,17 +46,28 @@
             <column header="language_id" name="language_id" type="NUMERIC"/>
         </loadData>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-11" context="test">
-        <sql>
-            INSERT INTO language (id, language) values (1, 'ru'), (2, 'en'), (3, 'ua')
-        </sql>
-    </changeSet>
     <changeSet author="Nikolay Fatkullin" id="1615233457468-6" context="dev">
         <loadData file="db/changelog/data/language.csv"
                   tableName="language">
             <column header="id" name="id" type="NUMERIC"/>
             <column header="language" name="language" type="STRING"/>
         </loadData>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-9" context="test">
+        <sql>
+            INSERT INTO country_codes (id, iso) values(1, 'AF'), (2, 'AL'),(3, 'AQ')
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-10" context="test">
+        <sql>
+            INSERT INTO language (id, language) values (1, 'ru'), (2, 'en'), (3, 'ua')
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-11" context="test">
+        <sql>
+            INSERT INTO country(id, name, iso_id, language_id) values(1, 'Afghanistan', 1, 2),(4, 'Albania', 2, 2),(8,
+            'Антарктика', 3, 1)
+        </sql>
     </changeSet>
     <changeSet author="Nikolay Fatkullin" id="1615233457468-7">
         <sql>
@@ -78,6 +79,67 @@
     <changeSet author="Nikolay Fatkullin" id="1615233457468-8" context="dev, test">
         <sql>
             ALTER TABLE country ADD CONSTRAINT country_language_fk FOREIGN KEY (language_id)
+            REFERENCES language (id)
+            ON UPDATE NO ACTION ON DELETE NO ACTION;
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-12" context="dev, test">
+        <sql>
+            ALTER TABLE country
+            RENAME TO country_old
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-13" context="dev, test">
+        <sql>
+            ALTER TABLE country_codes
+            RENAME TO country_codes_old
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-14" context="dev, test">
+        <sql>
+            CREATE TABLE country
+            (
+            id BIGINT NOT NULL PRIMARY KEY,
+            iso VARCHAR(255)
+            );
+        </sql>
+    </changeSet>
+    <changeSet author="achil (generated)" id="1615233457468-18" context="dev">
+        <loadData file="db/changelog/data/country_codes.csv" tableName="country">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="iso" name="iso" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-15" context="dev, test">
+        <sql>
+            CREATE TABLE country_localization
+            (
+            id BIGINT NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            country_id BIGINT,
+            language_id BIGINT
+            );
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-19" context="dev">
+        <loadData file="db/changelog/data/country.csv"
+                  tableName="country_localization">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="name" name="name" type="STRING"/>
+            <column header="iso_id" name="country_id" type="NUMERIC"/>
+            <column header="language_id" name="language_id" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-16" context="dev, text">
+        <sql>
+            ALTER TABLE country_localization ADD CONSTRAINT countryLocalization_country_fk FOREIGN KEY (country_id)
+            REFERENCES country (id)
+            ON UPDATE NO ACTION ON DELETE NO ACTION;
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-17" context="dev, test">
+        <sql>
+            ALTER TABLE country_localization ADD CONSTRAINT localization_language_fk FOREIGN KEY (language_id)
             REFERENCES language (id)
             ON UPDATE NO ACTION ON DELETE NO ACTION;
         </sql>

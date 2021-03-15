@@ -157,6 +157,7 @@
                     <username>${db.username}</username>
                     <password>${db.password}</password>
                     <driver>${db.driver}</driver>
+                    <contexts>dev</contexts>
                 </configuration>
             </plugin>
             <plugin>

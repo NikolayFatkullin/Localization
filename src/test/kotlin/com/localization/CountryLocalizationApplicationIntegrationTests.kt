@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CountryApplicationIntegrationTests(@Autowired val mockMvc: MockMvc) {
+class CountryLocalizationApplicationIntegrationTests(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun checkResponseCodeWithCorrectData() {

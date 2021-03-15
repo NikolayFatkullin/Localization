@@ -1,7 +1,7 @@
 package com.localization.controller
 
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.Country
+import com.localization.model.CountryLocalization
 import com.localization.repository.IsoCodeRepository
 import com.localization.repository.LanguageRepository
 import com.localization.service.CountryService
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
-internal class CountryControllerTest {
+internal class CountryLocalizationControllerTest {
     private val countryService: CountryService = mock(CountryService::class.java)
     private val languageRepository = mock(LanguageRepository::class.java)
     private val isoCodeRepository = mock(IsoCodeRepository::class.java)
@@ -31,7 +31,7 @@ internal class CountryControllerTest {
     @Test
     fun getNameOfCountryCorrect() {
         `when`(countryService.getLocalizationByLanguageAndIso("IN", "en"))
-            .thenReturn(Country(1, "India", null, null))
+            .thenReturn(CountryLocalization(1, "India", null, null))
         mockMvc.perform(get("/countries/IN?language=en")).andExpect(status().isOk)
     }
 
