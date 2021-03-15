@@ -2,7 +2,7 @@ package com.localization.controller
 
 import com.localization.exception.DataNotFoundException
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.dto.CountryResponseDto
+import com.localization.model.CountryResponseDto
 import com.localization.service.CountryService
 import com.localization.service.mapper.CountryMapToDto
 import org.springframework.http.HttpStatus

@@ -1,7 +1,7 @@
 package com.localization.service
 
-import com.localization.model.CountryLocalization
+import com.localization.model.EntityResponseDto
 
 interface CountryService {
-    fun getLocalizationByLanguageAndIso(isoCode: String, language: String): CountryLocalization
+    fun getLocalizationByLanguageAndIso(isoCode: String, language: String): EntityResponseDto
 }

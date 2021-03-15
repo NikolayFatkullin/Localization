@@ -1,8 +1,5 @@
 package com.localization.repository
 
-import com.localization.model.Language
-import org.springframework.data.jpa.repository.JpaRepository
-
-interface LanguageRepository: JpaRepository<Language, Long> {
+interface LanguageRepository {
     fun existsByLanguage(language : String): Boolean
 }

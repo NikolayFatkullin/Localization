@@ -13,16 +13,16 @@ import org.springframework.test.context.TestPropertySource
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CountryRepositoryTest {
     @Autowired
-    val isoCodeRepository: IsoCodeRepository? = null
+    val countryRepository: CountryRepository? = null
 
     @Test
     internal fun testForCorrectData() {
-        assertTrue(isoCodeRepository!!.existsByIso("AF"))
+        assertTrue(countryRepository!!.existsByIso("AF"))
     }
 
     @Test
     internal fun testForIncorrectIso() {
-        assertFalse(isoCodeRepository!!.existsByIso("AFF"))
+        assertFalse(countryRepository!!.existsByIso("AFF"))
     }
 
 }
