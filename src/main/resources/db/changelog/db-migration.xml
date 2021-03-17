@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <changeSet author="achil (generated)" id="1615233457468-1" context="dev, test">
+    <changeSet author="achil (generated)" id="1615233457468-1" context="test, dev">
         <sql>
             CREATE TABLE country_codes
             (
@@ -17,7 +17,7 @@
             <column header="iso" name="iso" type="STRING"/>
         </loadData>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-3" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-3" context="test, dev">
         <sql>
             CREATE TABLE country
             (
@@ -28,11 +28,11 @@
             );
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-4" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-4" context="test, dev">
         <sql>
             CREATE TABLE language
             (
-            id BIGINT NOT NULL PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             language VARCHAR(255)
             );
         </sql>
@@ -69,37 +69,37 @@
             'Антарктика', 3, 1)
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-7">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-7" context="test, dev">
         <sql>
             ALTER TABLE country ADD CONSTRAINT country_iso_fk FOREIGN KEY (iso_id)
             REFERENCES country_codes (id)
             ON UPDATE NO ACTION ON DELETE NO ACTION;
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-8" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-8" context="test, dev">
         <sql>
             ALTER TABLE country ADD CONSTRAINT country_language_fk FOREIGN KEY (language_id)
             REFERENCES language (id)
             ON UPDATE NO ACTION ON DELETE NO ACTION;
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-12" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-12" context="test, dev">
         <sql>
             ALTER TABLE country
             RENAME TO country_old
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-13" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-13" context="test, dev">
         <sql>
             ALTER TABLE country_codes
             RENAME TO country_codes_old
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-14" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-14" context="test, dev">
         <sql>
             CREATE TABLE country
             (
-            id BIGINT NOT NULL PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             iso VARCHAR(255)
             );
         </sql>
@@ -110,11 +110,11 @@
             <column header="iso" name="iso" type="STRING"/>
         </loadData>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-15" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-15" context="test, dev">
         <sql>
             CREATE TABLE country_localization
             (
-            id BIGINT NOT NULL PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             name VARCHAR(255),
             country_id BIGINT,
             language_id BIGINT
@@ -130,18 +130,29 @@
             <column header="language_id" name="language_id" type="NUMERIC"/>
         </loadData>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-16" context="dev, text">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-16" context="test, dev">
         <sql>
             ALTER TABLE country_localization ADD CONSTRAINT countryLocalization_country_fk FOREIGN KEY (country_id)
             REFERENCES country (id)
             ON UPDATE NO ACTION ON DELETE NO ACTION;
         </sql>
     </changeSet>
-    <changeSet author="Nikolay Fatkullin" id="1615233457468-17" context="dev, test">
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-17" context="test, dev">
         <sql>
             ALTER TABLE country_localization ADD CONSTRAINT localization_language_fk FOREIGN KEY (language_id)
             REFERENCES language (id)
             ON UPDATE NO ACTION ON DELETE NO ACTION;
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-18" context="test">
+        <sql>
+            INSERT INTO country (id, iso) values(1, 'AF'), (2, 'AL'),(3, 'AQ')
+        </sql>
+    </changeSet>
+    <changeSet author="Nikolay Fatkullin" id="1615233457468-19" context="test">
+        <sql>
+            INSERT INTO country_localization(id, name, country_id, language_id) values(1, 'Afghanistan', 1, 2),(2, 'Albania', 2, 2),(
+            3, 'Антарктика', 3, 1)
         </sql>
     </changeSet>
 </databaseChangeLog>
