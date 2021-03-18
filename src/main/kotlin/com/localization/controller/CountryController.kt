@@ -2,7 +2,7 @@ package com.localization.controller
 
 import com.localization.exception.DataNotFoundException
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.CountryResponseDto
+import com.localization.model.CountryResponse
 import com.localization.service.CountryService
 import com.localization.service.mapper.CountryMapToDto
 import org.springframework.http.HttpStatus
@@ -19,7 +19,7 @@ class CountryController(
     @GetMapping("/countries/{isoCode}")
     fun getNameOfCountry(
         @PathVariable isoCode: String, @RequestParam language: String,
-    ): CountryResponseDto {
+    ): CountryResponse {
         val localizationByLanguageAndIso =
             countryService.getLocalizationByLanguageAndIso(isoCode, language)
         return countryMapToDto.mapToDto(localizationByLanguageAndIso)

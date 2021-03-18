@@ -2,7 +2,7 @@ package com.localization.service
 
 import com.localization.exception.DataNotFoundException
 import com.localization.exception.IncorrectInputDataException
-import com.localization.model.EntityResponseDto
+import com.localization.model.Country
 import com.localization.repository.CountryRepository
 import com.localization.repository.LanguageRepository
 import org.springframework.stereotype.Service
@@ -13,7 +13,7 @@ class CountryServiceImpl(
         val languageRepository: LanguageRepository
 ) :
     CountryService {
-    override fun getLocalizationByLanguageAndIso(isoCode: String, language: String): EntityResponseDto {
+    override fun getLocalizationByLanguageAndIso(isoCode: String, language: String): Country {
         if (!countryRepository.existsByIso(isoCode)) {
             throw IncorrectInputDataException("Incorrect iso code of country: $isoCode")
         }

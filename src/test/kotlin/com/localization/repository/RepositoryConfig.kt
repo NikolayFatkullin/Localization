@@ -1,15 +1,15 @@
 package com.localization.repository
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import org.springframework.boot.jdbc.DataSourceBuilder
 import javax.sql.DataSource
 
-class RepositoryConfig {
-    fun getDataSource() : DataSource {
-        val dataSourceBuilder = DataSourceBuilder.create()
-        dataSourceBuilder.driverClassName("org.hsqldb.jdbc.JDBCDriver")
-        dataSourceBuilder.url("jdbc:hsqldb:mem:countries")
-        dataSourceBuilder.username("sa")
-        dataSourceBuilder.password("")
-        return dataSourceBuilder.build()
+fun getDataSource(): DataSource = HikariDataSource(hikariConfig())
+
+fun hikariConfig() = HikariConfig()
+    .apply {
+        jdbcUrl = "jdbc:h2:mem:countries"
+        username = "sa"
+        password = ""
     }
-}

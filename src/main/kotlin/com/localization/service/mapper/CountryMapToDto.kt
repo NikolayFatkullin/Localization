@@ -1,8 +1,8 @@
 package com.localization.service.mapper
 
-import com.localization.model.CountryResponseDto
-import com.localization.model.EntityResponseDto
+import com.localization.model.CountryResponse
+import com.localization.model.Country
 
 interface CountryMapToDto {
-    fun mapToDto(countryLocalization: EntityResponseDto): CountryResponseDto
+    fun mapToDto(country: Country): CountryResponse
 }
