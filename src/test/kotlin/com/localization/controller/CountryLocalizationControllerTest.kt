@@ -2,19 +2,19 @@ package com.localization.controller
 
 import com.localization.exception.IncorrectInputDataException
 import com.localization.model.Country
-import com.localization.repository.CountryRepository
 import com.localization.repository.LanguageRepository
-import com.localization.repository.impl.LanguageRepositoryImpl
 import com.localization.service.CountryService
 import com.localization.service.mapper.CountryMapToDto
 import com.localization.service.mapper.impl.CountryMapToDtoImpl
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.reset
 import com.nhaarman.mockito_kotlin.whenever
+import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
@@ -35,6 +35,9 @@ internal class CountryLocalizationControllerTest {
         whenever(countryService.getLocalizationByLanguageAndIso("IN", "en"))
             .thenReturn(Country(1,"IN", "India"))
         mockMvc.perform(get("/countries/IN?language=en")).andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(
+                MockMvcResultMatchers.content().string(Matchers.containsString("India")))
     }
 
     @Test
@@ -46,6 +49,9 @@ internal class CountryLocalizationControllerTest {
             )
         ).thenThrow(IncorrectInputDataException::class.java)
         mockMvc.perform(get("/countries/INN?language=en")).andExpect(status().isBadRequest)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(
+                MockMvcResultMatchers.content().string(Matchers.containsString("Incorrect iso code of country: INN")))
     }
 
     @Test
@@ -57,5 +63,9 @@ internal class CountryLocalizationControllerTest {
             )
         ).thenThrow(IncorrectInputDataException::class.java)
         mockMvc.perform(get("/countries/IN?language=in")).andExpect(status().isBadRequest)
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(
+                MockMvcResultMatchers.content()
+                    .string(Matchers.containsString("Incorrect localization language: in")))
     }
 }
