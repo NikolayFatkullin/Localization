@@ -1,4 +1,4 @@
 package com.localization.exception
 
-class DataProcessingException(message: String) :
+class IncorrectInputDataException(message: String) :
     RuntimeException(message)
