@@ -86,12 +86,6 @@
             <version>${liquibase.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- h2DB -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
         <!-- mockito kotlin -->
         <dependency>
             <groupId>com.nhaarman</groupId>
