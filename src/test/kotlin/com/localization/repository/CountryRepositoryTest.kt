@@ -16,7 +16,6 @@ import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
 internal class CountryRepositoryTest {
-
     companion object {
         private val datasource = getDataSource()
         private val jdbcTemplate = NamedParameterJdbcTemplate(datasource)

@@ -1,8 +1,11 @@
 package com.localization
 
 import org.hamcrest.Matchers.containsString
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,6 +20,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource("/application-test.properties")
 class CountryLocalizationApplicationIntegrationTest(@Autowired val mockMvc: MockMvc) {
+    @Value("spring.datasource.url")
+    val url = postgresqlContainer.jdbcUrl
+    @Value("spring.datasource.username")
+    val username = postgresqlContainer.username
+    @Value("spring.datasource.password")
+    val password = postgresqlContainer.password
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        internal fun setUp() {
+            postgresqlContainer.start()
+        }
+    }
 
     @Test
     fun checkResponseCodeWithCorrectData() {

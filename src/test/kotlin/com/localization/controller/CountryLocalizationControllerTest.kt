@@ -33,11 +33,12 @@ internal class CountryLocalizationControllerTest {
     @Test
     fun getNameOfCountryCorrect() {
         whenever(countryService.getLocalizationByLanguageAndIso("IN", "en"))
-            .thenReturn(Country(1,"IN", "India"))
+            .thenReturn(Country(1, "IN", "India"))
         mockMvc.perform(get("/countries/IN?language=en")).andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
             .andExpect(
-                MockMvcResultMatchers.content().string(Matchers.containsString("India")))
+                MockMvcResultMatchers.content().string(Matchers.containsString("India"))
+            )
     }
 
     @Test
@@ -47,11 +48,12 @@ internal class CountryLocalizationControllerTest {
                 "INN",
                 "en"
             )
-        ).thenThrow(IncorrectInputDataException::class.java)
+        ).thenThrow(IncorrectInputDataException("Incorrect iso code of country: INN"))
         mockMvc.perform(get("/countries/INN?language=en")).andExpect(status().isBadRequest)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
             .andExpect(
-                MockMvcResultMatchers.content().string(Matchers.containsString("Incorrect iso code of country: INN")))
+                MockMvcResultMatchers.content().string(Matchers.containsString("Incorrect iso code of country: INN"))
+            )
     }
 
     @Test
@@ -61,11 +63,12 @@ internal class CountryLocalizationControllerTest {
                 "IN",
                 "in"
             )
-        ).thenThrow(IncorrectInputDataException::class.java)
+        ).thenThrow(IncorrectInputDataException("Incorrect localization language: in"))
         mockMvc.perform(get("/countries/IN?language=in")).andExpect(status().isBadRequest)
             .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
             .andExpect(
                 MockMvcResultMatchers.content()
-                    .string(Matchers.containsString("Incorrect localization language: in")))
+                    .string(Matchers.containsString("Incorrect localization language: in"))
+            )
     }
 }
